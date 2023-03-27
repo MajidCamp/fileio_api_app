@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:fileio_api_app/model/file_response.dart';
 import 'package:flutter/material.dart';
 
 import 'FileGetRequest.dart';
@@ -7,12 +8,12 @@ import 'FilePostRequst.dart';
 
 
 class FileIoApiService extends ChangeNotifier {
-  List<Files>? _files;
-
-  List<Files>? get files => _files;
+  // List<Files>? _files;
+  //
+  // List<Files>? get files => _files;
   final Dio _dio = Dio();
 
-  List<Files>? data;
+  List<Nodes>? data;
 
   FileIoApiService() {
     _dio.options.headers['accept'] = 'application/json';
@@ -32,12 +33,12 @@ class FileIoApiService extends ChangeNotifier {
   Future<void> getFiles() async {
     final response = await _dio.get('https://file.io/');
 
-    late final fileGetRequest;
+    FileResponse  fileGetRequest;
     print(response.data);
 
     if(response != null){
-      fileGetRequest = FileGetRequest.fromJson(response.data);
-        data = fileGetRequest.files;
+      fileGetRequest = FileResponse.fromJson(response.data);
+        data = fileGetRequest.nodes;
         print("data: $data");
         notifyListeners();
     }
