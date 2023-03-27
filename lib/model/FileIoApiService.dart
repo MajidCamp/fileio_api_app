@@ -12,6 +12,8 @@ class FileIoApiService extends ChangeNotifier {
   List<Files>? get files => _files;
   final Dio _dio = Dio();
 
+  List<Files>? data;
+
   FileIoApiService() {
     _dio.options.headers['accept'] = 'application/json';
     _dio.options.headers['Authorization'] =
@@ -27,7 +29,7 @@ class FileIoApiService extends ChangeNotifier {
 //
 //
 // }
-  Future<FileGetRequest> getFiles() async {
+  Future<void> getFiles() async {
     final response = await _dio.get('https://file.io/');
 
     late final fileGetRequest;
@@ -35,14 +37,18 @@ class FileIoApiService extends ChangeNotifier {
 
     if(response != null){
       fileGetRequest = FileGetRequest.fromJson(response.data);
-        _files = fileGetRequest.files;
-        print(_files);
+        data = fileGetRequest.files;
+        print("data: $data");
         notifyListeners();
     }
 
+    // List<dynamic> jsonList = response.data;
+    // data = jsonList.map((item) => Files.fromJson(item)).toList();
+    // notifyListeners();
 
 
-    return fileGetRequest;
+
+    // return fileGetRequest;
   }
 
 
