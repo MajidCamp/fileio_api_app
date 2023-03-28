@@ -1,10 +1,12 @@
 
+import 'dart:html';
+
 import 'package:dio/dio.dart';
 import 'package:fileio_api_app/model/file_response.dart';
 import 'package:flutter/material.dart';
 
-import 'FileGetRequest.dart';
 import 'FilePostRequst.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 class FileIoApiService extends ChangeNotifier {
@@ -69,5 +71,16 @@ class FileIoApiService extends ChangeNotifier {
   Future<void> downloadFile(String key) async {
     final response = await _dio.get('https://www.file.io/download/$key');
   }
+  // Future<void> downloadFile(String key) async {
+  //   final response = await Dio().get('https://www.file.io/download/$key', options: Options(responseType: ResponseType.bytes));
+  //
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final filePath = '${directory.path}/$key'; // Set the file path to the app's documents directory
+  //
+  //   final file = File(filePath);
+  //   await file.writeAsBytes(response.data);
+  //
+  //   print('File saved to $filePath');
+  // }
 }
 
